@@ -1,18 +1,13 @@
-const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
 const express = require("express");
 const app = express();
 //middleware
-// const DB ="";
 
-mongoose
-  .connect(
-    "mongodb+srv://vkatariya:8DUPfgE8xZKnHp7l@cluster0.boun3.mongodb.net/mern-app?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
-  .then(() => {
-    console.warn("db connection done");
-  });
+dotenv.config({ path: "./config.env" });
+require("./db/conn");
+
+const PORT = process.env.PORT;
 
 const middleware = (req, res, next) => {
   console.log(`Hello My Middleware`);
@@ -36,6 +31,6 @@ app.get("/signuo", (req, res) => {
   res.send(`Hello Register world Sign in from the  server`);
 });
 
-app.listen(3000, () => {
-  console.log(`Server is running port number 3000`);
+app.listen(PORT, () => {
+  console.log(`Server is running port number ${PORT}`);
 });
